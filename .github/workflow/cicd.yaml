@@ -1,15 +1,16 @@
 name: Create GKE With Terraform
 description: This workflow creates a GKE cluster using Terraform.
+
 on:
   push:
     branches:
       - main
 
 permissions:
-      id-token: write
-      contents: read
+  id-token: write
+  contents: read
 
-jobs: 
+jobs:
   create-gke:
     runs-on: ubuntu-latest
     defaults:
@@ -18,23 +19,23 @@ jobs:
         working-directory: gke-cluster
 
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
 
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@v2
-      with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_ID}}
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_ID }}
           service_account: ${{ secrets.WORKLOAD_IDENTITY_SERVICE_ACCOUNT }}
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-    - name: Run terraform init
-      run: terraform init
+      - name: Run terraform init
+        run: terraform init
 
-    - name: Run terraform validate
-      run: terraform validate
+      - name: Run terraform validate
+        run: terraform validate
 
-    - name: Run terraform apply
-      run: terraform apply -no-color -auto-approve
+      - name: Run terraform apply
+        run: terraform apply -no-color -auto-approve
