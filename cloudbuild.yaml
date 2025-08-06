@@ -1,0 +1,25 @@
+# cloudbuild.yaml
+
+# substitutions
+substitutions:
+  _CLUSTER_ZONE: 'us-central1-a'
+  _CLUSTER_NAME: 'gke-cluster'
+  _PROJECT_ID: 'my-project-3bd1e'
+  _LOCATION: 'us-central1'
+
+options:
+  substitutionOption: ALLOW_LOOSE
+
+steps:
+# Deploy nginx to GKE using kubectl
+- name: 'gcr.io/cloud-builders/kubectl'
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=${_CLUSTER_ZONE}'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  args:
+    - 'apply'
+    - '-f'
+    - 'kube-deployment/deployment.yaml'
+    - '-f'
+    - 'kube-deployment/service.yaml'
+
