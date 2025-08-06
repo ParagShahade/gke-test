@@ -1,5 +1,5 @@
 module "gke" {
-  source          = "./modules/gke"
+  source          = "../modules/gke"
   project_id      = var.project_id
   region          = var.region
   network_name    = var.network_name
