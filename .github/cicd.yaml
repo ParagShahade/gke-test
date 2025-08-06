@@ -13,7 +13,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: gke-test
+        working-directory: gke-cluster
 
     steps:
     - name: Checkout the repository
