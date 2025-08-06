@@ -1,3 +1,0 @@
-substitutions:
-  _COMPUTE_ZONE: us-west1
-  _CLUSTER_NAME: hotel-search-cluster-1

@@ -1,6 +1,6 @@
-# terraform {
-#   backend "gcs" {
-#     bucket = "bkt-terraform-state-gke-test"
-#     prefix = "terraform/gke-test"
-#   }
-# }
+terraform {
+  backend "gcs" {
+    bucket = "your-terraform-state-bucket"
+    prefix = "gke-test"
+  }
+}
