@@ -1,0 +1,38 @@
+name: Create GKE With Terraform
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs: 
+  create-gke:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: gke-test
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+          workload_identity_provider: ${{ secret.workload-identity-provider-id }}
+          service_account: ${{ secret.workload-identity-service-account }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Run terraform init
+      run: terraform init
+
+    - name: Run terraform validate
+      run: terraform validate
+
+    - name: Run terraform apply
+      run: terraform apply -no-color -auto-approve
