@@ -1,0 +1,60 @@
+# destroy.yaml - GitHub Actions workflow to destroy all AKS and Azure resources using Terraform
+# Triggered manually from the GitHub Actions UI for safety.
+
+name: Destroy gke
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: terraform-gke-destroy
+  cancel-in-progress: true
+
+jobs:
+  create-gke:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: gke-cluster
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/399757394151/locations/global/workloadIdentityPools/gke-test-action/providers/github
+          service_account: git-hub-action@my-project-3bd1e.iam.gserviceaccount.com
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan (Destroy)
+        run: terraform plan -destroy
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+
+      - name: Notify on completion
+        run: echo "Destroy complete!"

@@ -1,4 +1,4 @@
-# This Kubernetes deployment file sets up a CORS proxy using the imjacobclark/cors-container image.
+# This Kubernetes deployment file sets up a NGINX deployment with specific resource requests and limits, readiness and liveness probes, and a service to expose it.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
