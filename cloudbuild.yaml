@@ -2,13 +2,14 @@
 
 # substitutions
 substitutions:
-  _CLUSTER_ZONE: 'us-central1-a'
+  _CLUSTER_ZONE: 'europe-west1-a'
   _CLUSTER_NAME: 'gke-cluster'
   _PROJECT_ID: 'my-project-3bd1e'
-  _LOCATION: 'us-central1'
+  _LOCATION: 'europe-west1'
 
 options:
   substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
 # Deploy nginx to GKE using kubectl
