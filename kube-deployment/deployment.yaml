@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cors-proxy
+  name: nginx
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: cors-proxy
+      app: nginx
   template:
     metadata:
       labels:
-        app: cors-proxy
+        app: nginx
     spec:
       containers:
-        - name: cors-proxy
-          image: imjacobclark/cors-container:latest
+        - name: nginx
+          image: nginx:latest
           ports:
             - containerPort: 3000
           resources:
