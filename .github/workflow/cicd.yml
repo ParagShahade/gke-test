@@ -3,8 +3,8 @@ description: This workflow creates a GKE cluster using Terraform.
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "master" ]
+  pull_request:
 
 permissions:
   id-token: write
